@@ -38,12 +38,12 @@ func main() {
 	if len(os.Args) > 1 {
 		userMessage = os.Args[1]
 	}
-	url := "https://free.xyhelper.cn/carpage"
+	url := "https://.cn/carpage"
 	headers := map[string]string{
 		"Content-Type": "application/json",
 		"Accept":       "application/json, text/plain, */*",
-		"Origin":       "https://free.xyhelper.cn",
-		"Referer":      "https://free.xyhelper.cn/list",
+		"Origin":       "https://.cn",
+		"Referer":      "https://.cn/list",
 		"User-Agent":   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
 	}
 
@@ -87,7 +87,7 @@ func main() {
 	if len(activeCars) > 0 {
 		rand.Seed(time.Now().UnixNano())
 		randomCar := activeCars[rand.Intn(len(activeCars))]
-		newURL := fmt.Sprintf("https://free.xyhelper.cn/auth/login?carid=%s", randomCar.CarID)
+		newURL := fmt.Sprintf("https://.cn/auth/login?carid=%s", randomCar.CarID)
 		config(newURL, userMessage)
 	} else {
 		log.Println("没有找到符合条件的车队")
@@ -123,7 +123,7 @@ func config(url string, userMessage string) {
 
 		ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 		defer cancel()
-		allocatorCtx, cancel := chromedp.NewRemoteAllocator(ctx, "ws://159.75.246.16:9222")
+		allocatorCtx, cancel := chromedp.NewRemoteAllocator(ctx, "ws://:9222")
 		defer cancel()
 		ctx, cancel = chromedp.NewContext(allocatorCtx)
 		defer cancel()
@@ -173,14 +173,14 @@ func updateConfigFile(config Config) {
 }
 
 func navigateToURL(usertoken string, cookies string, ConversationID string, ParentMessageID string, userMessage string) {
-	url := "https://free.xyhelper.cn/backend-api/conversation"
+	url := "https://.cn/backend-api/conversation"
 	headers := map[string]string{
 		"Accept":        "text/event-stream",
 		"Authorization": "Bearer " + usertoken,
 		"Content-Type":  "application/json",
 		"Cookie":        cookies,
-		"Origin":        "https://free.xyhelper.cn",
-		"Referer":       "https://free.xyhelper.cn/?model=auto",
+		"Origin":        "https://.cn",
+		"Referer":       "https://.cn/?model=auto",
 	}
 
 	requestBody := map[string]interface{}{
